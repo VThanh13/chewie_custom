@@ -253,10 +253,25 @@ class _CupertinoControlsState extends State<CupertinoControls>
                 color: backgroundColor,
                 child: chewieController.isLive
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           _buildPlayPause(controller, iconColor, barHeight),
+                          if (chewieController.allowMuting)
+                            _buildMuteButton(
+                              controller,
+                              Colors.transparent,
+                              iconColor,
+                              barHeight,
+                              10,
+                            ),
                           _buildLive(iconColor),
+                          if (chewieController.allowFullScreen)
+                            _buildExpandButton(
+                              Colors.transparent,
+                              iconColor,
+                              barHeight,
+                              15,
+                            ),
                         ],
                       )
                     : Row(
@@ -320,7 +335,7 @@ class _CupertinoControlsState extends State<CupertinoControls>
                       ? CupertinoIcons.arrow_down_right_arrow_up_left
                       : CupertinoIcons.arrow_up_left_arrow_down_right,
                   color: iconColor,
-                  size: 16,
+                  size: 30,
                 ),
               ),
             ),
@@ -402,7 +417,7 @@ class _CupertinoControlsState extends State<CupertinoControls>
                 child: Icon(
                   _latestValue.volume > 0 ? Icons.volume_up : Icons.volume_off,
                   color: iconColor,
-                  size: 16,
+                  size: 30,
                 ),
               ),
             ),
@@ -568,22 +583,22 @@ class _CupertinoControlsState extends State<CupertinoControls>
       ),
       child: Row(
         children: <Widget>[
-          if (chewieController.allowFullScreen)
-            _buildExpandButton(
-              backgroundColor,
-              iconColor,
-              barHeight,
-              buttonPadding,
-            ),
-          const Spacer(),
-          if (chewieController.allowMuting)
-            _buildMuteButton(
-              controller,
-              backgroundColor,
-              iconColor,
-              barHeight,
-              buttonPadding,
-            ),
+          // if (chewieController.allowFullScreen)
+          //   _buildExpandButton(
+          //     backgroundColor,
+          //     iconColor,
+          //     barHeight,
+          //     buttonPadding,
+          //   ),
+          // const Spacer(),
+          // if (chewieController.allowMuting)
+          //   _buildMuteButton(
+          //     controller,
+          //     backgroundColor,
+          //     iconColor,
+          //     barHeight,
+          //     buttonPadding,
+          //   ),
         ],
       ),
     );
