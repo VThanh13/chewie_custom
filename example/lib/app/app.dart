@@ -172,7 +172,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
     return MaterialApp(
       title: widget.title,
       theme: AppTheme.light.copyWith(
-        platform: _platform ?? Theme.of(context).platform,
+        // platform: _platform ?? Theme.of(context).platform,
       ),
       home: Scaffold(
         appBar: AppBar(title: Text(widget.title)),

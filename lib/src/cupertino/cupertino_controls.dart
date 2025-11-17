@@ -303,7 +303,14 @@ class _CupertinoControlsState extends State<CupertinoControls>
   Widget _buildLive(Color iconColor) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
-      child: Text('LIVE', style: TextStyle(color: iconColor, fontSize: 12.0)),
+      child: Text(
+        'LIVE',
+        style: TextStyle(
+          color: iconColor,
+          fontSize: 15.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -335,7 +342,7 @@ class _CupertinoControlsState extends State<CupertinoControls>
                       ? CupertinoIcons.arrow_down_right_arrow_up_left
                       : CupertinoIcons.arrow_up_left_arrow_down_right,
                   color: iconColor,
-                  size: 30,
+                  size: 24,
                 ),
               ),
             ),
@@ -441,6 +448,7 @@ class _CupertinoControlsState extends State<CupertinoControls>
         child: AnimatedPlayPause(
           color: widget.iconColor,
           playing: controller.value.isPlaying,
+          size: 30,
         ),
       ),
     );
