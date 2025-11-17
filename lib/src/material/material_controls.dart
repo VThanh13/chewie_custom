@@ -6,9 +6,9 @@ import 'package:chewie/src/chewie_player.dart';
 import 'package:chewie/src/chewie_progress_colors.dart';
 import 'package:chewie/src/helpers/utils.dart';
 import 'package:chewie/src/material/material_progress_bar.dart';
-import 'package:chewie/src/material/widgets/options_dialog.dart';
-import 'package:chewie/src/material/widgets/playback_speed_dialog.dart';
-import 'package:chewie/src/models/option_item.dart';
+//import 'package:chewie/src/material/widgets/options_dialog.dart';
+//import 'package:chewie/src/material/widgets/playback_speed_dialog.dart';
+//import 'package:chewie/src/models/option_item.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
@@ -134,79 +134,81 @@ class _MaterialControlsState extends State<MaterialControls>
   }
 
   Widget _buildActionBar() {
-    return Positioned(
-      top: 0,
-      right: 0,
-      child: SafeArea(
-        child: AnimatedOpacity(
-          opacity: notifier.hideStuff ? 0.0 : 1.0,
-          duration: const Duration(milliseconds: 250),
-          child: Row(
-            children: [
-              _buildSubtitleToggle(),
-              if (chewieController.showOptions) _buildOptionsButton(),
-            ],
-          ),
-        ),
-      ),
-    );
+    return SizedBox();
+    // return Positioned(
+    //   top: 0,
+    //   right: 0,
+    //   child: SafeArea(
+    //     child: AnimatedOpacity(
+    //       opacity: notifier.hideStuff ? 0.0 : 1.0,
+    //       duration: const Duration(milliseconds: 250),
+    //       child: Row(
+    //         children: [
+    //           _buildSubtitleToggle(),
+    //           if (chewieController.showOptions) _buildOptionsButton(),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
-  List<OptionItem> _buildOptions(BuildContext context) {
-    final options = <OptionItem>[
-      OptionItem(
-        onTap: (context) async {
-          Navigator.pop(context);
-          _onSpeedButtonTap();
-        },
-        iconData: Icons.speed,
-        title:
-            chewieController.optionsTranslation?.playbackSpeedButtonText ??
-            'Playback speed',
-      ),
-    ];
+  // List<OptionItem> _buildOptions(BuildContext context) {
+  //   final options = <OptionItem>[
+  //     OptionItem(
+  //       onTap: (context) async {
+  //         Navigator.pop(context);
+  //         _onSpeedButtonTap();
+  //       },
+  //       iconData: Icons.speed,
+  //       title:
+  //           chewieController.optionsTranslation?.playbackSpeedButtonText ??
+  //           'Playback speed',
+  //     ),
+  //   ];
 
-    if (chewieController.additionalOptions != null &&
-        chewieController.additionalOptions!(context).isNotEmpty) {
-      options.addAll(chewieController.additionalOptions!(context));
-    }
-    return options;
-  }
+  //   if (chewieController.additionalOptions != null &&
+  //       chewieController.additionalOptions!(context).isNotEmpty) {
+  //     options.addAll(chewieController.additionalOptions!(context));
+  //   }
+  //   return options;
+  // }
 
-  Widget _buildOptionsButton() {
-    return AnimatedOpacity(
-      opacity: notifier.hideStuff ? 0.0 : 1.0,
-      duration: const Duration(milliseconds: 250),
-      child: IconButton(
-        onPressed: () async {
-          _hideTimer?.cancel();
+  // Widget _buildOptionsButton() {
+  //   return SizedBox();
+  //   // return AnimatedOpacity(
+  //   //   opacity: notifier.hideStuff ? 0.0 : 1.0,
+  //   //   duration: const Duration(milliseconds: 250),
+  //   //   child: IconButton(
+  //   //     onPressed: () async {
+  //   //       _hideTimer?.cancel();
 
-          if (chewieController.optionsBuilder != null) {
-            await chewieController.optionsBuilder!(
-              context,
-              _buildOptions(context),
-            );
-          } else {
-            await showModalBottomSheet<OptionItem>(
-              context: context,
-              isScrollControlled: true,
-              useRootNavigator: chewieController.useRootNavigator,
-              builder: (context) => OptionsDialog(
-                options: _buildOptions(context),
-                cancelButtonText:
-                    chewieController.optionsTranslation?.cancelButtonText,
-              ),
-            );
-          }
+  //   //       if (chewieController.optionsBuilder != null) {
+  //   //         await chewieController.optionsBuilder!(
+  //   //           context,
+  //   //           _buildOptions(context),
+  //   //         );
+  //   //       } else {
+  //   //         await showModalBottomSheet<OptionItem>(
+  //   //           context: context,
+  //   //           isScrollControlled: true,
+  //   //           useRootNavigator: chewieController.useRootNavigator,
+  //   //           builder: (context) => OptionsDialog(
+  //   //             options: _buildOptions(context),
+  //   //             cancelButtonText:
+  //   //                 chewieController.optionsTranslation?.cancelButtonText,
+  //   //           ),
+  //   //         );
+  //   //       }
 
-          if (_latestValue.isPlaying) {
-            _startHideTimer();
-          }
-        },
-        icon: const Icon(Icons.more_vert, color: Colors.white),
-      ),
-    );
-  }
+  //   //       if (_latestValue.isPlaying) {
+  //   //         _startHideTimer();
+  //   //       }
+  //   //     },
+  //   //     icon: const Icon(Icons.more_vert, color: Colors.white),
+  //   //   ),
+  //   // );
+  // }
 
   Widget _buildSubtitles(BuildContext context, Subtitles subtitles) {
     if (!_subtitleOn) {
@@ -264,15 +266,30 @@ class _MaterialControlsState extends State<MaterialControls>
             children: [
               Flexible(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    _buildPlayPause(),
+
                     if (chewieController.isLive)
-                      const Expanded(child: Text('LIVE'))
+                      Row(
+                        children: [
+                          Icon(Icons.lens_sharp, size: 10, color: Colors.red),
+                          SizedBox(width: 5),
+                          Text(
+                            'LIVE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )
                     else
                       _buildPosition(iconColor),
                     if (chewieController.allowMuting)
                       _buildMuteButton(controller),
-                    const Spacer(),
+
                     if (chewieController.allowFullScreen) _buildExpandButton(),
                   ],
                 ),
@@ -314,6 +331,7 @@ class _MaterialControlsState extends State<MaterialControls>
             child: Icon(
               _latestValue.volume > 0 ? Icons.volume_up : Icons.volume_off,
               color: Colors.white,
+              size: 28,
             ),
           ),
         ),
@@ -337,6 +355,7 @@ class _MaterialControlsState extends State<MaterialControls>
                   ? Icons.fullscreen_exit
                   : Icons.fullscreen,
               color: Colors.white,
+              size: 30,
             ),
           ),
         ),
@@ -418,27 +437,97 @@ class _MaterialControlsState extends State<MaterialControls>
     );
   }
 
-  Future<void> _onSpeedButtonTap() async {
-    _hideTimer?.cancel();
+  Widget _buildPlayPause() {
+    final bool isFinished =
+        (_latestValue.position >= _latestValue.duration) &&
+        _latestValue.duration.inSeconds > 0;
+    final bool showPlayButton =
+        widget.showPlayButton && !_dragging && !notifier.hideStuff;
 
-    final chosenSpeed = await showModalBottomSheet<double>(
-      context: context,
-      isScrollControlled: true,
-      useRootNavigator: chewieController.useRootNavigator,
-      builder: (context) => PlaybackSpeedDialog(
-        speeds: chewieController.playbackSpeeds,
-        selected: _latestValue.playbackSpeed,
+    return GestureDetector(
+      onTap: () {
+        if (_latestValue.isPlaying) {
+          if (_chewieController?.pauseOnBackgroundTap ?? false) {
+            _playPause();
+            _cancelAndRestartTimer();
+          } else {
+            if (_displayTapped) {
+              setState(() {
+                notifier.hideStuff = true;
+              });
+            } else {
+              _cancelAndRestartTimer();
+            }
+          }
+        } else {
+          _playPause();
+
+          setState(() {
+            notifier.hideStuff = true;
+          });
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (!isFinished && !chewieController.isLive)
+            // CenterSeekButton(
+            //   iconData: Icons.replay_10,
+            //   // backgroundColor: Colors.black54,
+            //   iconColor: Colors.white,
+            //   show: showPlayButton,
+            //   fadeDuration: chewieController.materialSeekButtonFadeDuration,
+            //   iconSize: chewieController.materialSeekButtonSize,
+            //   onPressed: _seekBackward,
+            // ),
+            IconButton(onPressed: _seekBackward, icon: Icon(Icons.replay_10)),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: marginSize),
+            child: CenterPlayButton(
+              backgroundColor: Colors.transparent,
+              iconColor: Colors.white,
+              isFinished: isFinished,
+              isPlaying: controller.value.isPlaying,
+              show: showPlayButton,
+              onPressed: _playPause,
+            ),
+          ),
+          if (!isFinished && !chewieController.isLive)
+            CenterSeekButton(
+              iconData: Icons.forward_10,
+              backgroundColor: Colors.black54,
+              iconColor: Colors.white,
+              show: showPlayButton,
+              fadeDuration: chewieController.materialSeekButtonFadeDuration,
+              iconSize: chewieController.materialSeekButtonSize,
+              onPressed: _seekForward,
+            ),
+        ],
       ),
     );
-
-    if (chosenSpeed != null) {
-      controller.setPlaybackSpeed(chosenSpeed);
-    }
-
-    if (_latestValue.isPlaying) {
-      _startHideTimer();
-    }
   }
+
+  // Future<void> _onSpeedButtonTap() async {
+  //   _hideTimer?.cancel();
+
+  //   final chosenSpeed = await showModalBottomSheet<double>(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     useRootNavigator: chewieController.useRootNavigator,
+  //     builder: (context) => PlaybackSpeedDialog(
+  //       speeds: chewieController.playbackSpeeds,
+  //       selected: _latestValue.playbackSpeed,
+  //     ),
+  //   );
+
+  //   if (chosenSpeed != null) {
+  //     controller.setPlaybackSpeed(chosenSpeed);
+  //   }
+
+  //   if (_latestValue.isPlaying) {
+  //     _startHideTimer();
+  //   }
+  // }
 
   Widget _buildPosition(Color? iconColor) {
     final position = _latestValue.position;
@@ -466,32 +555,32 @@ class _MaterialControlsState extends State<MaterialControls>
     );
   }
 
-  Widget _buildSubtitleToggle() {
-    //if don't have subtitle hiden button
-    if (chewieController.subtitle?.isEmpty ?? true) {
-      return const SizedBox();
-    }
-    return GestureDetector(
-      onTap: _onSubtitleTap,
-      child: Container(
-        height: barHeight,
-        color: Colors.transparent,
-        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-        child: Icon(
-          _subtitleOn
-              ? Icons.closed_caption
-              : Icons.closed_caption_off_outlined,
-          color: _subtitleOn ? Colors.white : Colors.grey[700],
-        ),
-      ),
-    );
-  }
+  // Widget _buildSubtitleToggle() {
+  //   //if don't have subtitle hiden button
+  //   if (chewieController.subtitle?.isEmpty ?? true) {
+  //     return const SizedBox();
+  //   }
+  //   return GestureDetector(
+  //     onTap: _onSubtitleTap,
+  //     child: Container(
+  //       height: barHeight,
+  //       color: Colors.transparent,
+  //       padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+  //       child: Icon(
+  //         _subtitleOn
+  //             ? Icons.closed_caption
+  //             : Icons.closed_caption_off_outlined,
+  //         color: _subtitleOn ? Colors.white : Colors.grey[700],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  void _onSubtitleTap() {
-    setState(() {
-      _subtitleOn = !_subtitleOn;
-    });
-  }
+  // void _onSubtitleTap() {
+  //   setState(() {
+  //     _subtitleOn = !_subtitleOn;
+  //   });
+  // }
 
   void _cancelAndRestartTimer() {
     _hideTimer?.cancel();

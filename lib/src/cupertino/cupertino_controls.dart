@@ -255,20 +255,20 @@ class _CupertinoControlsState extends State<CupertinoControls>
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          _buildPlayPause(controller, iconColor, barHeight),
+                          _buildPlayPause(controller, Colors.white, barHeight),
+                          _buildLive(Colors.white),
                           if (chewieController.allowMuting)
                             _buildMuteButton(
                               controller,
                               Colors.transparent,
-                              iconColor,
+                              Colors.white,
                               barHeight,
                               10,
                             ),
-                          _buildLive(iconColor),
                           if (chewieController.allowFullScreen)
                             _buildExpandButton(
                               Colors.transparent,
-                              iconColor,
+                              Colors.white,
                               barHeight,
                               15,
                             ),
@@ -301,16 +301,19 @@ class _CupertinoControlsState extends State<CupertinoControls>
   }
 
   Widget _buildLive(Color iconColor) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 12.0),
-      child: Text(
-        'LIVE',
-        style: TextStyle(
-          color: iconColor,
-          fontSize: 15.0,
-          fontWeight: FontWeight.bold,
+    return Row(
+      children: [
+        Icon(Icons.lens_sharp, size: 10, color: Colors.red),
+        SizedBox(width: 5),
+        Text(
+          'LIVE',
+          style: TextStyle(
+            color: iconColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
+      ],
     );
   }
 

@@ -117,15 +117,15 @@ class _ChewieDemoState extends State<ChewieDemo> {
           ? Duration(milliseconds: bufferDelay!)
           : null,
 
-      additionalOptions: (context) {
-        return <OptionItem>[
-          OptionItem(
-            onTap: (context) => toggleVideo(),
-            iconData: Icons.live_tv_sharp,
-            title: 'Toggle Video Src',
-          ),
-        ];
-      },
+      // additionalOptions: (context) {
+      //   return <OptionItem>[
+      //     OptionItem(
+      //       onTap: (context) => toggleVideo(),
+      //       iconData: Icons.live_tv_sharp,
+      //       title: 'Toggle Video Src',
+      //     ),
+      //   ];
+      // },
       subtitle: Subtitles(subtitles),
       showSubtitles: true,
       subtitleBuilder: (context, dynamic subtitle) => Container(
@@ -172,7 +172,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
     return MaterialApp(
       title: widget.title,
       theme: AppTheme.light.copyWith(
-        // platform: _platform ?? Theme.of(context).platform,
+        platform: _platform ?? Theme.of(context).platform,
       ),
       home: Scaffold(
         appBar: AppBar(title: Text(widget.title)),
